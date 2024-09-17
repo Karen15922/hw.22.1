@@ -9,7 +9,7 @@ class Category(models.Model):
     products_in_category = models.IntegerField(**NULLABLE)
 
     def __str__(self):
-        return f'{self.category_name} содержит {self.description}'
+        return f'{self.pk} содержит {self.category_name}'
 
     class Meta:
         verbose_name = 'категория'
@@ -25,6 +25,11 @@ class Product(models.Model):
     created_at = models.DateField(default=datetime.now)
     update_at = models.DateField(default=datetime.now)
 
+    # возвращает строку сожержащую номер активной версии, если нет активной версии возвращает None
+    @property
+    def active_version(self):
+        return Release.object.filter(product=self, is_active=True).first() # type: ignore
+        
     def __str__(self):
         return f'{self.product_name} стоит {self.price} находится в {self.category}'
 
@@ -32,3 +37,18 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ('product_name',)
+        
+ # модель версий продуктов      
+class Release(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт', help_text= 'Выберте продукт', defaul='empty')
+    version = models.CharFild(max_digits=4, decimal_places=2, verbouse_name='Версия', help_text='Введите версию продукта')
+    version_name = models.CharField(max_lenght=100, verbouse_name='Название версии', help_text='Введите название версии продукта', **NULLABLE)
+    is_Active = models.BooleanField(default=False, verbose_name='Активная версия')
+    
+    def __str__(self):
+        return f'{self.version} {"активная" if self.is_active  else "неактивная"}'
+    
+    class Meta:
+        verbose_name = 'версия'
+        verbouse_name_plural = 'версии'
+        ordering = ('version_name',)
