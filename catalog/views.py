@@ -24,7 +24,16 @@ class ProductCreateView(CreateView):
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
+    
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        ReleaseFormset = inlineformset_factory(Product, Release, ReleaseForm, extra=1)
+        if self.request.method == 'POST':
+            context_data['formset'] = ReleaseFormset(self.request.POST, instance=self.object)
+        else:
+            context_data['formset'] = ReleaseFormset(instance=self.object)
+        return context_data 
 
 # контроллер для страницы редактирования продукта
 class ProductUpdateView(UpdateView):
