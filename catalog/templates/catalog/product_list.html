@@ -10,12 +10,12 @@
 <div class="container overflow-hidden">
     <div class="row text-center gy-5">
         {% for object in object_list %}
-            {% if object.Active_version %}
+            {% if object.active_version %}
                 <div class="col-3">
                     <div class="card mb-4 box-shadow h-100">
                         <div class="card-header">
                             <h4 class="my-0 font-weight-normal">{{ object.product_name }}</h4>
-                            <h6 class="my-0 text-muted">version {{  object.Active_version }}</h6> 
+                            <h6 class="my-0 text-muted">version {{  object.active_version }}</h6> 
                         </div>
                         <div class="card-body">
                                 <h1 class="card-title pricing-card-title">{{ object.price }}р</h1>

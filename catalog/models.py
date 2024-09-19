@@ -57,12 +57,12 @@ class Product(models.Model):
 
 # модель версий продуктов
 class Release(models.Model):
-    product_id = models.ForeignKey(
+    product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
         verbose_name='Продукт',
-        help_text='Выберите продукт',
-        default = 'empty',)
+        help_text='Выберите продукт', 
+        **NULLABLE,)
 
     version = models.DecimalField(
         max_digits=4,
@@ -77,12 +77,12 @@ class Release(models.Model):
         help_text='Введите имя версии продукта',
         **NULLABLE,)
         
-    is_Active = models.BooleanField(
-        default=False,
+    is_active = models.BooleanField(
+        default=True, 
         help_text='Укажите является ли версия активной',)
 
     def __str__(self):
-        return f'{self.version} {"активная" if self.is_Active else "неактивная"}'
+        return f'{self.version} {"активная" if self.is_active else "неактивная"}'
 
     class Meta:
         verbose_name = 'версия'
