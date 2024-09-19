@@ -25,7 +25,7 @@ class Command(BaseCommand):
             {'product_name': 'Самокат', 'product_description': 'б/у', 'price': 3000.00, 'category': categories.get('Самокаты')},
             {'product_name': 'Ролики', 'product_description': 'новые', 'price': 3500.00, 'category': categories.get('Ролики')},
             {'product_name': 'Коньки', 'product_description': 'б/у, но как живые', 'price': 500.00, 'category': categories.get('Ролики')},
-            {'product_name': 'Велосипед', 'product_description': 'новый/детский', 'price': 5000.00, 'category': categories.get},
+            {'product_name': 'Велосипед', 'product_description': 'новый/детский', 'price': 5000.00, 'category': categories.get('Велосипеды')},
         ]
 
         # Создаем продукты
