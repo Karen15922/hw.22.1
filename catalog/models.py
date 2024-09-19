@@ -78,7 +78,7 @@ class Release(models.Model):
         **NULLABLE,)
         
     is_active = models.BooleanField(
-        default=False,
+        default=True, 
         help_text='Укажите является ли версия активной',)
 
     def __str__(self):

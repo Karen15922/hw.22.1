@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from catalog.models import Category, Product
+from catalog.models import Category, Product, Release
+
 
 class Command(BaseCommand):
 
@@ -29,4 +30,12 @@ class Command(BaseCommand):
         ]
 
         # Создаем продукты
-        Product.objects.bulk_create([Product(**product) for product in products_list])
+        product_for_create = []
+        release_for_create = []
+        for product in products_list:
+            product_for_create.append(Product(**product))
+            release_for_create.append(Release(product = product_for_create[-1]))
+
+        Product.objects.bulk_create(product_for_create)
+        Release.objects.bulk_create(release_for_create)
+        
